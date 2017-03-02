@@ -1,6 +1,6 @@
-var _count = Symbol("count");
-var _head = Symbol("head");
-var _tail = Symbol("tail");
+const _count = Symbol("count");
+const _head = Symbol("head");
+const _tail = Symbol("tail");
 
 class Queue {
   constructor() {

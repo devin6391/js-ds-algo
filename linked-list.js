@@ -1,5 +1,6 @@
-var _head = Symbol("head");
-var _count = Symbol("count");
+const _head = Symbol("head");
+const _count = Symbol("count");
+
 class LinkedList {
   constructor() {
     this[_count] = 0;
@@ -84,6 +85,19 @@ class LinkedList {
       current = current.next;
     }
     return arr;
+  }
+
+  displayAt(index) {
+    var current = this[_head];
+    var size = this[_count];
+    if(index > 0 && index < size) {
+      for(var i = 0; i < index; i++) {
+        current = current.next;
+      }
+      return current.data;
+    } else {
+      return null;
+    }
   }
 }
 
