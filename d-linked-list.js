@@ -30,6 +30,7 @@ class DLinkedList {
   displayAll() {
     var current = this[_head];
     var size = this[_count];
+    var arr = [];
 
     if(current) {
       for(var i = 0; i < size; i++) {
@@ -44,7 +45,7 @@ class DLinkedList {
   displayBackwards() {
     var current = this[_tail];
     var size = this[_count];
-
+    var arr = [];
     if(current) {
       for(var i = 0; i < size; i++) {
         arr.push(current.data);
@@ -62,6 +63,8 @@ class DLinkedList {
       for(var i = 0; i < index; i++) {
         current = current.next;
       }
+      return current.data;
+    } else if(index == 0 && size) {
       return current.data;
     } else {
       return null;
@@ -109,7 +112,7 @@ class DLinkedList {
       prev: null
     }
 
-    if(this[_count] > 0 && index > 0 && index < this[_count]) {
+    if(index > 0 && index < this[_count]) {
       for(var i = 0; i < index; i++) {
         previous = current;
         current = current.next;
@@ -118,27 +121,28 @@ class DLinkedList {
       node.prev = previous;
       current.prev = node;
       previous.next = node;
+      this[_count]++;
     } else if(index == 0) {
       this.addFirst(val);
     } else {
       this.addLast(val);
     }
-    this[_count]++
   }
 
   removeFirst() {
     var current = this[_head];
     var next = null;
-    if(this[_count] > 0) this[_count]--;
     if(current && this[_count] > 1) {
       next = current.next;
       next.prev = null;
       current.next = null;
       this[_head] = next;
+      this[_count]--;
       return current.data;
     } else if(current && this[_count] == 1) {
       this[_head] = null;
       this[_tail] = null;
+      this[_count]--;
       return current.data;
     } else {
       return null;
@@ -148,16 +152,18 @@ class DLinkedList {
   removeLast() {
     var current = this[_tail];
     var prev = null;
-    if(this[_count] > 0) this[_count]--;
     if(current && this[_count] > 1) {
       prev = current.prev;
       prev.next = null;
       current.prev = null;
       this[_tail] = prev;
+      this[_count]--;
       return current.data;
     } else if(current && this[_count] == 1) {
       this[_head] = null;
       this[_tail] = null;
+      this[_count]--;
+      return current.data;
     } else {
       return null;
     }
@@ -165,19 +171,19 @@ class DLinkedList {
 
   removeAt(index) {
     var current = this[_head];
-    if(this[_count] > 0) this[_count]--;
     if(index == 0) {
       return this.removeFirst();
     } else if(this[_count] > 1 && index == this[_count] - 1) {
       return this.removeLast();
-    } else if(current && index > 1 && index < this[_count]) {
-      for(i = 0; i < index; i++) {
+    } else if(current && index > 0 && index < this[_count]) {
+      for(var i = 0; i < index; i++) {
         current = current.next;
       }
       current.prev.next = current.next;
       current.next.prev = current.prev;
       current.next = null;
       current.prev = null;
+      this[_count]--;
       return current.data
     } else {
       return null;
